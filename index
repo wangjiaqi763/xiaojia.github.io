@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重要提醒</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        danger: '#dc2626',
+                        warning: '#f59e0b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .animate-pulse-fast {
+                animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            .animate-shake {
+                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            }
+            @keyframes shake {
+                10%, 90% { transform: translateX(-1px); }
+                20%, 80% { transform: translateX(2px); }
+                30%, 50%, 70% { transform: translateX(-3px); }
+                40%, 60% { transform: translateX(3px); }
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4">
+    <!-- 警告图标 -->
+    <div class="text-danger text-6xl md:text-8xl mb-6 animate-pulse-fast">
+        <<i class="fa fa-exclamation-triangle" aria-hidden="true"></</i>
+    </div>
+    
+    <!-- 主要提醒文字 -->
+    <div class="text-center mb-8">
+        <h1 class="text-[clamp(2rem,5vw,4rem)] font-bold text-danger mb-4 animate-shake" id="main-message">
+            wjq提醒你被骗了
+        </h1>
+        <p class="text-gray-700 text-lg md:text-xl max-w-2xl mx-auto">
+            请立即提高警惕，保护好你的个人信息和财产安全，必要时可寻求帮助
+        </p>
+    </div>
+    
+    <!-- 安全提示卡片 -->
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md mb-8 transform transition-all duration-300 hover:shadow-xl">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+            <<i class="fa fa-shield text-warning mr-2"></</i> 安全建议
+        </h2>
+        <ul class="space-y-3 text-gray-600">
+            <li class="flex items-start">
+                <<i class="fa fa-check-circle text-green-500 mt-1 mr-2"></</i>
+                <span>立即停止与对方的任何交易和沟通</span>
+            </li>
+            <li class="flex items-start">
+                <<i class="fa fa-check-circle text-green-500 mt-1 mr-2"></</i>
+                <span>不要透露任何银行卡信息和验证码</span>
+            </li>
+            <li class="flex items-start">
+                <<i class="fa fa-check-circle text-green-500 mt-1 mr-2"></</i>
+                <span>保留相关证据，必要时报警处理</span>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- 互动按钮 -->
+    <button id="alert-button" class="bg-danger hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+        我已了解
+    </button>
+    
+    <script>
+        // 页面加载完成后添加动画效果
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainMessage = document.getElementById('main-message');
+            const alertButton = document.getElementById('alert-button');
+            
+            // 每隔3秒重复抖动动画
+            setInterval(() => {
+                mainMessage.classList.remove('animate-shake');
+                // 触发重绘
+                void mainMessage.offsetWidth;
+                mainMessage.classList.add('animate-shake');
+            }, 3000);
+            
+            // 按钮点击效果
+            alertButton.addEventListener('click', () => {
+                alertButton.textContent = "已确认提醒";
+                alertButton.classList.remove('bg-danger');
+                alertButton.classList.add('bg-green-600');
+                
+                // 显示确认信息
+                const confirmation = document.createElement('p');
+                confirmation.className = 'text-green-600 mt-4 text-center';
+                confirmation.innerHTML = '<<i class="fa fa-check-circle mr-1"></</i> 你已确认收到提醒';
+                document.body.appendChild(confirmation);
+            });
+        });
+    </script>
+</body>
+</html>
